@@ -1,0 +1,88 @@
+{
+  "points": {
+    "30cc36fd-71ca-3c09-9296-e94ebd47bd2b": {
+      "report": "mileage",
+      "role": "value",
+      "confidence": "dictionary",
+      "note": "Mileage value according to the continuous data dictionary."
+    },
+    "75d65f00-5fa8-334a-826d-e73e91fe5c8d": {
+      "report": "mileage",
+      "role": "value",
+      "confidence": "dictionary",
+      "note": "Corresponding distance value according to the continuous data dictionary."
+    },
+    "beafe64e-9076-3034-aaae-bda0d1bbc3be": {
+      "report": "mileage",
+      "role": "reportTimestamp",
+      "confidence": "dictionary",
+      "note": "Timestamp of the mileage report."
+    },
+    "a04d086d-70bb-30c2-8361-68da66b4fd97": {
+      "report": "mileage",
+      "role": "state",
+      "confidence": "dictionary",
+      "note": "State of mileage information."
+    },
+    "fc78c9ac-afa8-3ae0-b92d-890af9b0bb1a": {
+      "report": "mileage",
+      "role": "state",
+      "confidence": "dictionary",
+      "note": "State of mileage information."
+    },
+    "ac1108b1-b8cc-3db9-a663-03d387e42223": {
+      "report": "batteryLevelHv",
+      "role": "value",
+      "confidence": "dictionary",
+      "note": "Displayed HV battery level."
+    },
+    "2a9de7f7-a846-3d18-9883-650de9c4e4e1": {
+      "report": "batteryLevelHv",
+      "role": "state",
+      "confidence": "dictionary",
+      "note": "State of HV battery level information."
+    },
+    "506cb83e-f99f-3af3-bbeb-0429b69a78d9": {
+      "report": "batteryState",
+      "role": "soc",
+      "confidence": "dictionary",
+      "note": "Battery state report SoC."
+    },
+    "b66a49f0-481d-3ca9-a22f-66c4b797bfeb": {
+      "report": "batteryState",
+      "role": "systemTimestamp",
+      "confidence": "heuristic",
+      "note": "Adjacent in observed EU Data Act payload near battery_state_report.soc; PDF only says vehicle system time."
+    },
+    "67d015ee-c2c0-383d-ab67-33ac674c0129": {
+      "report": "batteryState",
+      "role": "systemTimestamp",
+      "confidence": "heuristic",
+      "note": "Adjacent in observed EU Data Act payload near battery_state_report.soc; PDF only says vehicle system time."
+    },
+    "47015e31-2d7f-3cda-a6c3-0dfa3123b925": {
+      "report": "batteryState",
+      "role": "carCapturedTime",
+      "confidence": "dictionary",
+      "note": "Time when the report was sent to the backend."
+    }
+  },
+  "reports": {
+    "mileage": {
+      "name": "Mileage report",
+      "primaryValueRole": "value",
+      "timestampRole": "reportTimestamp"
+    },
+    "batteryLevelHv": {
+      "name": "HV battery level",
+      "primaryValueRole": "value"
+    },
+    "batteryState": {
+      "name": "Battery state report",
+      "primaryValueRole": "soc",
+      "timestampRole": "systemTimestamp",
+      "captureTimeRole": "carCapturedTime",
+      "timestampConfidence": "heuristic"
+    }
+  }
+}

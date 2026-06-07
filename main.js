@@ -17,7 +17,11 @@ const { v4: uuidv4 } = require("uuid");
 const traverse = require("traverse");
 const geohash = require("ngeohash");
 const { extractKeys } = require("./lib/extractKeys");
-const { EuDataActClient, normalizeDataset: normalizeEuDataActDataset } = require("./lib/euDataAct");
+const {
+  EuDataActClient,
+  buildSemanticDatasetTree: buildEuDataActSemanticTree,
+  normalizeDataset: normalizeEuDataActDataset,
+} = require("./lib/euDataAct");
 const tibber = require("./lib/tibber");
 const axios = require("axios").default;
 const Json2iob = require("json2iob");
@@ -7303,6 +7307,7 @@ class VwWeconnect extends utils.Adapter {
       const downloadStart = Date.now();
       const dl = await this.euDataAct.downloadDataset(vin, identifier, newest.name);
       const normalized = normalizeEuDataActDataset(dl.json);
+      const semanticTree = buildEuDataActSemanticTree(dl.json);
       const dataPoints = (dl.json.Data || []).length;
       const normalizedKeys = Object.keys(normalized).length;
       this.log.debug(
@@ -7318,17 +7323,15 @@ class VwWeconnect extends utils.Adapter {
       // tag the dataset metadata into the same object so it gets the same
       // treatment (no manual extendObject/setState dance needed).
       const payload = {
-        ...normalized,
+        ...semanticTree,
         _dataset_name: newest.name,
       };
       if (newest.createdOn) {
         payload._dataset_created_on = newest.createdOn;
       }
-      await this.json2iob.parse(vin + ".statuseudata", payload, {
+      await this.json2iob.parse(vin + ".statuseudata_points", payload, {
         forceIndex: true,
-        channelName: "EU Data Act 15-min dataset",
-        descriptions: this.euDataActDescriptions,
-        states: this.euDataActStates,
+        channelName: "EU Data Act 15-min data points",
       });
       this.euDataActLastDataset[vin] = newest.name;
       // Reset the once-per-session no-content flag so a future stretch of
