@@ -7327,6 +7327,20 @@ class VwWeconnect extends utils.Adapter {
         forceIndex: true,
         channelName: "EU Data Act 15-min data points",
       });
+
+      const legacyPayload = {
+        ...normalized,
+        _dataset_name: newest.name,
+      };
+      if (newest.createdOn) {
+        legacyPayload._dataset_created_on = newest.createdOn;
+      }
+      await this.json2iob.parse(vin + ".statuseudata", legacyPayload, {
+        forceIndex: true,
+        channelName: "EU Data Act 15-min dataset",
+        descriptions: this.euDataActDescriptions,
+        states: this.euDataActStates,
+      });
       this.euDataActLastDataset[vin] = newest.name;
       // Reset the once-per-session no-content flag so a future stretch of
       // empty datasets (e.g. car parked for days) will log the hint again.
